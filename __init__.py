@@ -1,6 +1,5 @@
 import os
 import re
-import shlex
 import subprocess
 import tempfile
 
@@ -8,9 +7,10 @@ from aqt import mw, gui_hooks
 from aqt.editor import Editor
 from aqt.utils import showInfo, showWarning, qconnect
 from aqt.qt import (
-    QAction, QPixmap, QPainter, QColor, Qt, QPolygon, QPoint,
+    QAction,
     QDialog, QWidget, QVBoxLayout, QHBoxLayout,
     QPushButton, QLabel, QDoubleSpinBox, QSizePolicy,
+    QPainter, QColor, Qt,
 )
 
 ADDON_DIR = os.path.dirname(__file__)
@@ -48,25 +48,6 @@ def extract_first_audio(field_html):
     if match:
         return match.group(1)
     return None
-
-
-def _icon_path():
-    icon_file = os.path.join(ADDON_DIR, "edit_audio_icon.png")
-    if os.path.exists(icon_file):
-        return icon_file
-    pm = QPixmap(64, 64)
-    pm.fill(Qt.GlobalColor.transparent)
-    p = QPainter(pm)
-    p.setRenderHint(QPainter.RenderHint.Antialiasing)
-    p.setBrush(QColor("#4a9eff"))
-    p.setPen(Qt.PenStyle.NoPen)
-    p.drawEllipse(8, 8, 48, 48)
-    p.setBrush(QColor("white"))
-    triangle = QPolygon([QPoint(22, 22), QPoint(22, 42), QPoint(40, 32)])
-    p.drawPolygon(triangle)
-    p.end()
-    pm.save(icon_file, "PNG")
-    return icon_file
 
 
 # ---------------------------------------------------------------------------
@@ -559,7 +540,7 @@ def _on_editor_buttons(buttons, editor):
     config = _get_config()
     _trace(f"_on_editor_buttons() — editor id={id(editor)}")
     btn = editor.addButton(
-        icon=_icon_path(),
+        icon=None,
         cmd="edit_audio_external",
         func=edit_audio,
         tip=f"Trim first audio in '{config['audio_field_name']}' field ({config['shortcut']})",

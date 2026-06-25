@@ -10,6 +10,8 @@ An Anki 2.1 add-on that adds a built-in waveform trimmer for audio files in your
 - **Preview playback** — hear the trimmed result before committing, using `ffplay`
 - **Lossless trim** — commits with `ffmpeg -c copy` (fast, no re-encoding)
 
+![screenshot](https://raw.githubusercontent.com/WilsonNet/anki-audio-waveform-trimmer/main/screenshot.png)
+
 Only the **first** `[sound:...]` in the configured field is edited; additional audio files are left untouched.
 
 ## Requirements
